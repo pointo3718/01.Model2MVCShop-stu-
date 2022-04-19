@@ -62,20 +62,20 @@ public class ProductDAO {
 		
 		Connection con = DBUtil.getConnection();
 		
-		String sql = "SELECT * FROM product p, transaction t WHERE p.prod_no=t.prod_no ";
+		String sql = "select p.prod_no, p.prod_name, p.price, p.reg_date, NVL(t.tran_status_code,0) from product p, transaction t where p.prod_no = t.prod_no(+)";
 		if (searchVO.getSearchCondition() != null) {
 			if (searchVO.getSearchCondition().equals("0")) {
-				sql += " AND PROD_NO='" + searchVO.getSearchKeyword()
+				sql += " AND prod_no='" + searchVO.getSearchKeyword()
 						+ "'";
 			} else if (searchVO.getSearchCondition().equals("1")) {
-				sql += " AND PROD_NAME='" + searchVO.getSearchKeyword()
+				sql += " AND prod_name='" + searchVO.getSearchKeyword()
 						+ "'";
 			} else {
-				sql += " AND Price='" + searchVO.getSearchKeyword()
+				sql += " AND price='" + searchVO.getSearchKeyword()
 				+ "'";
 			}
 		}
-		sql += " order by PROD_NO";
+		sql += " ORDER BY p.prod_no ";
 
 		PreparedStatement stmt = 
 			con.prepareStatement( sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -99,11 +99,13 @@ public class ProductDAO {
 				ProductVO productVO = new ProductVO();
 				productVO.setProdNo(rs.getInt("PROD_NO"));
 				productVO.setProdName(rs.getString("PROD_NAME"));
-				productVO.setProdDetail(rs.getString("PROD_DETAIL"));
-				productVO.setManuDate(rs.getString("MANUFACTURE_DAY"));
+//				productVO.setProdDetail(rs.getString("PROD_DETAIL"));
+//				productVO.setManuDate(rs.getString("MANUFACTURE_DAY"));
 				productVO.setPrice(rs.getInt("PRICE"));
-				productVO.setFileName(rs.getString("IMAGE_FILE"));
+//				productVO.setFileName(rs.getString("IMAGE_FILE"));
 				productVO.setRegDate(rs.getDate("REG_DATE"));
+				productVO.setProTranCode(rs.getString("NVL(t.tran_status_code,0)"));
+				
 				list.add(productVO);
 				if (!rs.next())
 					break;

@@ -17,15 +17,24 @@ public class UpdateTranCodeAction extends Action {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		ProductVO productVO = new ProductVO();
-		PurchaseVO pruchaseVO = new PurchaseVO();
-		String tranCode = request.getParameter("tranCode");
-		productVO.setProTranCode(tranCode);
+		PurchaseVO purchaseVO = new PurchaseVO();
+//		String tranCode = request.getParameter("tranCode");
+//		productVO.setProTranCode(tranCode);
+		
 		productVO.setProdNo(Integer.parseInt(request.getParameter("prodNo")));
+		purchaseVO.setPurchaseProd(productVO);
+		purchaseVO.setTranCode(request.getParameter("tranCode"));
+		
+		String menu = request.getParameter("menu");
 		
 		PurchaseService service = new PurchaseServiceImpl();
-		service.updateTranCode(pruchaseVO);
+		service.updateTranCode(purchaseVO);
 		
-			return "forward:/listPurchase.do";
+		if(menu.equals("manage")) {
+			return "redirect:/listProduct.do?menu=manage";
+		}else {
+			return "redirect:/listProduct.do?menu=search";
+		}
+		
 	}
-
 }

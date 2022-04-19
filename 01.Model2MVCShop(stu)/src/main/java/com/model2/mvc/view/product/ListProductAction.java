@@ -22,7 +22,7 @@ public class ListProductAction extends Action{
 		ProductVO productVO = new ProductVO();
 //		PurchaseVO purchaseVO = new PurchaseVO();
 		
-		;
+		
 //		productVO.setProTranCode(purchaseVO.getTranCode());
 		
 		int page = 1;
@@ -38,12 +38,11 @@ public class ListProductAction extends Action{
 		
 		ProductService service=new ProductServiceImpl();
 		HashMap<String,Object> map=service.getProductList(searchVO);
-		System.out.println(productVO.getProTranCode());
+		
 		System.out.println("list map"+map);
 		System.out.println(productVO);
 		request.setAttribute("map", map);
 		request.setAttribute("searchVO", searchVO);
-		request.setAttribute("productVO", productVO);
 		
 		System.out.println("Product list Action Á¾·á");
 		return "forward:/product/listProduct.jsp";
