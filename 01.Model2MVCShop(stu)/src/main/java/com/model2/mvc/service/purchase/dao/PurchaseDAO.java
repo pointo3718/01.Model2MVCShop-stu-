@@ -147,21 +147,19 @@ public HashMap<String, Object> getPurchaseList(SearchVO searchVO,String buyerId)
 	
 		Connection con = DBUtil.getConnection();
 		
-		String sql = "UPDATE transaction t product p SET tran_status_code=? WHERE t.prod_no = p.prod_no AND tran_no =?";
+//		String sql = "UPDATE transaction t product p SET tran_status_code=? WHERE t.prod_no = p.prod_no AND tran_no =?";
+		String sql = "UPDATE transaction t product p SET tran_status_code=? WHERE t.prod_no = p.prod_no AND t.prod_no =?";
 		//String sql = "UPDATE transaction SET tran_status_code WHERE prod_no=?" 
 		
 		PreparedStatement Pstmt = con.prepareStatement(sql);
 		Pstmt.setString(1, purchaseVO.getTranCode().trim());
-//		Pstmt.setInt(2, purchaseVO.getTranNo());
+		Pstmt.setInt(2, purchaseVO.getTranNo());
 		Pstmt.executeUpdate();
 		
 	
 	}
 
-	public HashMap<String,Object> getSaleList(SearchVO searchVO) throws Exception {
-		
-		return null;
-	}	
+//	public HashMap<String,Object> 
 
 	
 }
